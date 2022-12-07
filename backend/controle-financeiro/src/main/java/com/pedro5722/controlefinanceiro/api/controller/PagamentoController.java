@@ -15,7 +15,7 @@ public class PagamentoController {
     @Autowired
     private PagamentoServices pagamentoServices;
 
-    @GetMapping("/pagamentos")
+    @GetMapping()
     public ResponseEntity<List<Pagamento>> findAll(){
         List<Pagamento> pagamentos = pagamentoServices.findAll();
         return ResponseEntity.ok().body(pagamentos);
@@ -26,14 +26,13 @@ public class PagamentoController {
         Pagamento pagamento = pagamentoServices.findById(id);
         return ResponseEntity.ok().body(pagamento);
     }
-    @DeleteMapping(value="deletePagamento")
-    @ResponseBody
-    public ResponseEntity<String> deleteById(@RequestParam Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable Long id){
         pagamentoServices.deleteById(id);
         return new ResponseEntity<String>("Pagamento deletado com sucesso", HttpStatus.OK);
     }
 
-    @PostMapping("salvarPagamento")
+    @PostMapping()
     public ResponseEntity<Pagamento> salvar(@RequestBody Pagamento pagamento){
         pagamento = pagamentoServices.save(pagamento);
         return ResponseEntity.ok(pagamento);

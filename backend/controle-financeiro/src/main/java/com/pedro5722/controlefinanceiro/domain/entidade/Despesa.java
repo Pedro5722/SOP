@@ -26,7 +26,7 @@ public class Despesa implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_tipo",referencedColumnName = "id", nullable = false)
     private TipoDespesa tipo;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="id_status", referencedColumnName = "id", nullable = false)
     private StatusDespesa status;
     @Column(name = "data_protocolo", nullable = false)

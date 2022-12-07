@@ -20,7 +20,7 @@ public class Pagamento implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date data;
-    @Column(nullable = false,scale = 16, precision = 2)
+    @Column(nullable = false,scale = 2, precision = 16)
     private BigDecimal valor;
     private String observacao;
     @ManyToOne

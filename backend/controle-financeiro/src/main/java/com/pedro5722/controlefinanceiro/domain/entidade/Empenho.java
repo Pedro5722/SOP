@@ -1,12 +1,19 @@
 package com.pedro5722.controlefinanceiro.domain.entidade;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name="empenho", schema = "financeiro")
@@ -21,7 +28,7 @@ public class Empenho implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date data;
-    @Column(nullable = false, scale = 16, precision = 2)
+    @Column(nullable = false,  precision = 16, scale = 2)
     private BigDecimal valor;
     private String observacao;
     @OneToMany(mappedBy = "empenho")

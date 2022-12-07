@@ -52,6 +52,22 @@ public class DespesaController {
         despesa = despesaServices.save(despesa);
         return ResponseEntity.ok(despesa);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Despesa> update(@RequestBody DespesaDTO despesaDTO){
+        Despesa despesa = Despesa.builder()
+                .status(new StatusDespesa(despesaDTO.getStatus()))
+                .tipo(new TipoDespesa(despesaDTO.getTipo()))
+                .id(despesaDTO.getId())
+                .valor(despesaDTO.getValor())
+                .credor(despesaDTO.getCredor())
+                .dataProtocolo(despesaDTO.getDataProtocolo())
+                .descricao(despesaDTO.getDescricao())
+                .dataVencimento(despesaDTO.getDataVencimento())
+                .numeroProtocolo(despesaDTO.getNumeroProtocolo()).build();
+
+        despesa = despesaServices.save(despesa);
+        return ResponseEntity.ok(despesa);
+    }
 
 
     @GetMapping("/lista-filtrada")
