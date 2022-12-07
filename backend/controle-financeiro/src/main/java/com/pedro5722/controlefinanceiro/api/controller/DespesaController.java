@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://127.0.0.1:5173/", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/despesa")
@@ -30,10 +30,9 @@ public class DespesaController {
         return ResponseEntity.ok(despesa);
     }
 
-    @DeleteMapping()
-    @ResponseBody
-    public ResponseEntity<String> deleteById(@RequestParam Long idDespesa){
-        despesaServices.deleteById(idDespesa);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable Long id){
+        despesaServices.deleteById(id);
         return new ResponseEntity<String>("Despesa Excluida com sucesso", HttpStatus.OK);
     }
 
@@ -53,6 +52,7 @@ public class DespesaController {
         despesa = despesaServices.save(despesa);
         return ResponseEntity.ok(despesa);
     }
+
 
     @GetMapping("/lista-filtrada")
     public List<Despesa> getFilteredList(DespesaDTO despesaDTO){

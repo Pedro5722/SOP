@@ -43,4 +43,7 @@ public class Despesa implements Serializable {
 
     private List<Empenho> empenhos;
 
+    public Despesa(Long id) {
+        this.id = id;
+    }
 }

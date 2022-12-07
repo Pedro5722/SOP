@@ -30,6 +30,7 @@ public class DespesaServices {
 
         return despesaRepository.save(despesa);
     }
+
     public List<Despesa> findAll() {
         return despesaRepository.findAll();
     }

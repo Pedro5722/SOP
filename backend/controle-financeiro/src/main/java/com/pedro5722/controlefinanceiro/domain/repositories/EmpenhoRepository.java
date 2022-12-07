@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface EmpenhoRepository extends JpaRepository<Empenho, Long> {
 
-    List<Empenho> findDataBetween(String dataInicial, String dataFinal);
+    //List<Empenho> findDataBetween(String dataInicial, String dataFinal);
 
 }
