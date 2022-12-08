@@ -33,8 +33,7 @@ public class Empenho implements Serializable {
     private String observacao;
     @OneToMany(mappedBy = "empenho")
     private List<Pagamento> pagamentos;
-    @ManyToOne
-    @JoinColumn(name = "id_despesa", referencedColumnName = "id")
-    private Despesa despesa;
+    @Column(name = "id_despesa")
+    private Long idDespesa;
 
 }

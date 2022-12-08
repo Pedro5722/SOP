@@ -23,7 +23,6 @@ public class EmpenhoController {
         List<Empenho> empenhos = empenhoServices.findAll();
         return ResponseEntity.ok().body(empenhos);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Empenho> findById(@PathVariable Long id){
         Empenho empenho = empenhoServices.findById(id);
@@ -31,26 +30,7 @@ public class EmpenhoController {
     }
     @PostMapping
     public ResponseEntity<Empenho> save(@RequestBody EmpenhoDTO empenhoDTO){
-        Empenho empenho = Empenho.builder()
-                .ano(empenhoDTO.getAno())
-                .numero(empenhoDTO.getNumero())
-                .data(empenhoDTO.getData())
-                .valor(empenhoDTO.getValor())
-                .observacao(empenhoDTO.getObservacao())
-                .build();
-        empenho = empenhoServices.save(empenho);
-        return ResponseEntity.ok(empenho);
-    }
-    @PutMapping
-    public ResponseEntity<Empenho> update(@RequestBody EmpenhoDTO empenhoDTO){
-        Empenho empenho = Empenho.builder()
-                .ano(empenhoDTO.getAno())
-                .numero(empenhoDTO.getNumero())
-                .data(empenhoDTO.getData())
-                .valor(empenhoDTO.getValor())
-                .observacao(empenhoDTO.getObservacao())
-                .build();
-        empenho = empenhoServices.save(empenho);
+        Empenho empenho = empenhoServices.save(empenhoDTO);
         return ResponseEntity.ok(empenho);
     }
     @DeleteMapping("/{id}")

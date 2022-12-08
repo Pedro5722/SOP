@@ -5,6 +5,7 @@ import com.pedro5722.controlefinanceiro.domain.entidade.Despesa;
 import com.pedro5722.controlefinanceiro.domain.entidade.Empenho;
 import com.pedro5722.controlefinanceiro.domain.entidade.StatusDespesa;
 import com.pedro5722.controlefinanceiro.domain.entidade.TipoDespesa;
+import com.pedro5722.controlefinanceiro.domain.exceptions.CantDeleteDespesa;
 import com.pedro5722.controlefinanceiro.domain.repositories.DespesaRepository;
 import com.pedro5722.controlefinanceiro.domain.repositories.TipoDespesaRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +24,9 @@ public class DespesaServices {
     private final TipoDespesaRepository tipoDespesaRepository;
 
     public Despesa save(Despesa despesa){
-
         if(despesa.getId() == null){
             despesa.setStatus(new StatusDespesa(1));
         }
-
         return despesaRepository.save(despesa);
     }
 
@@ -48,15 +47,19 @@ public class DespesaServices {
         return despesaRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id)throws CantDeleteDespesa{
         Despesa despesa = findById(id);
 
         // Não deve ser permitido deletar uma Despesa que tenha ao menos um Empenho assoaciado.
         if (despesa.getEmpenhos().isEmpty()){
             despesaRepository.deleteById(id);
         }else{
-            throw new RuntimeException("Impossivel deletar: existem empenhos associados à despesa.");
+            throw new CantDeleteDespesa("Impossivel deletar: existem empenhos associados à despesa.");
         }
+    }
+
+    public Despesa findByNumeroProtocolo(String numeroProtocolo){
+        return despesaRepository.findByNumeroProtocolo(numeroProtocolo).orElseThrow(RuntimeException::new);
     }
 
     public List<TipoDespesa> findAllTipoDespesa(){

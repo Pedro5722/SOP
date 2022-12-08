@@ -1,6 +1,7 @@
 package com.pedro5722.controlefinanceiro.domain.services;
 
 
+import com.pedro5722.controlefinanceiro.api.dto.EmpenhoDTO;
 import com.pedro5722.controlefinanceiro.domain.entidade.Despesa;
 import com.pedro5722.controlefinanceiro.domain.entidade.Empenho;
 import com.pedro5722.controlefinanceiro.domain.entidade.Pagamento;
@@ -15,8 +16,18 @@ import java.util.List;
 public class EmpenhoServices {
 
     private final EmpenhoRepository empenhoRepository;
+    private final DespesaServices despesaServices;
 
-    public Empenho save(Empenho empenho){
+    public Empenho save(EmpenhoDTO empenhoDTO){
+        Long idDespesa = despesaServices.findByNumeroProtocolo(empenhoDTO.getNumeroProtocolo()).getId();
+        Empenho empenho = Empenho.builder()
+                .ano(empenhoDTO.getAno())
+                .numero(empenhoDTO.getNumero())
+                .data(empenhoDTO.getData())
+                .valor(empenhoDTO.getValor())
+                .observacao(empenhoDTO.getObservacao())
+                .idDespesa(idDespesa)
+                .build();
         return empenhoRepository.save(empenho);
     }
 

@@ -14,4 +14,5 @@ public class EmpenhoDTO {
     private Date data;
     private BigDecimal valor;
     private String observacao;
+    private String numeroProtocolo;
 }

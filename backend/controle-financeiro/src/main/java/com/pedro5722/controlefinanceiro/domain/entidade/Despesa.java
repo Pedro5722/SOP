@@ -26,7 +26,7 @@ public class Despesa implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_tipo",referencedColumnName = "id", nullable = false)
     private TipoDespesa tipo;
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name="id_status", referencedColumnName = "id", nullable = false)
     private StatusDespesa status;
     @Column(name = "data_protocolo", nullable = false)
@@ -39,8 +39,7 @@ public class Despesa implements Serializable {
     private String descricao;
     @Column(scale = 2, precision = 16)
     private BigDecimal valor;
-    @OneToMany(mappedBy = "despesa")
-
+    @OneToMany(mappedBy = "idDespesa")
     private List<Empenho> empenhos;
 
     public Despesa(Long id) {

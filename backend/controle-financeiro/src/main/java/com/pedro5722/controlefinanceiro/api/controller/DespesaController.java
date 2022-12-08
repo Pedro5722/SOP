@@ -4,6 +4,7 @@ import com.pedro5722.controlefinanceiro.api.dto.DespesaDTO;
 import com.pedro5722.controlefinanceiro.domain.entidade.Despesa;
 import com.pedro5722.controlefinanceiro.domain.entidade.StatusDespesa;
 import com.pedro5722.controlefinanceiro.domain.entidade.TipoDespesa;
+import com.pedro5722.controlefinanceiro.domain.exceptions.CantDeleteDespesa;
 import com.pedro5722.controlefinanceiro.domain.services.DespesaServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,13 @@ public class DespesaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
-        despesaServices.deleteById(id);
-        return new ResponseEntity<String>("Despesa Excluida com sucesso", HttpStatus.OK);
+        try {
+            despesaServices.deleteById(id);
+            return new ResponseEntity<String>("Despesa Excluida com sucesso", HttpStatus.OK);
+        } catch (CantDeleteDespesa e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PostMapping()
