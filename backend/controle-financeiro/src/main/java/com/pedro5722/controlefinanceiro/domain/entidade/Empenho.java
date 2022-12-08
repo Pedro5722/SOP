@@ -31,7 +31,7 @@ public class Empenho implements Serializable {
     @Column(nullable = false,  precision = 16, scale = 2)
     private BigDecimal valor;
     private String observacao;
-    @OneToMany(mappedBy = "empenho")
+    @OneToMany(mappedBy = "idEmpenho")
     private List<Pagamento> pagamentos;
     @Column(name = "id_despesa")
     private Long idDespesa;

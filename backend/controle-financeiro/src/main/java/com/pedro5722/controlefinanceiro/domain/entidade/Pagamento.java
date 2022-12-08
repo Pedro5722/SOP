@@ -1,11 +1,17 @@
 package com.pedro5722.controlefinanceiro.domain.entidade;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name="pagamento", schema = "financeiro")
@@ -15,7 +21,7 @@ public class Pagamento implements Serializable {
     private Long id;
     @Column(nullable = false)
     private Integer ano;
-    @Column(unique = true,nullable = false)
+    @Column(nullable = false)
     private Integer numero;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -23,8 +29,7 @@ public class Pagamento implements Serializable {
     @Column(nullable = false,scale = 2, precision = 16)
     private BigDecimal valor;
     private String observacao;
-    @ManyToOne
-    @JoinColumn(name = "id_empenho", referencedColumnName = "id")
-    private Empenho empenho;
+    @Column(name = "id_Empenho")
+    private Long idEmpenho;
 
 }

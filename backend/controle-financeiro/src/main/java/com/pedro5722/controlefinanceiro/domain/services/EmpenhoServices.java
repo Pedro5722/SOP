@@ -5,6 +5,7 @@ import com.pedro5722.controlefinanceiro.api.dto.EmpenhoDTO;
 import com.pedro5722.controlefinanceiro.domain.entidade.Despesa;
 import com.pedro5722.controlefinanceiro.domain.entidade.Empenho;
 import com.pedro5722.controlefinanceiro.domain.entidade.Pagamento;
+import com.pedro5722.controlefinanceiro.domain.exceptions.CantDeleteEmpenho;
 import com.pedro5722.controlefinanceiro.domain.repositories.EmpenhoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,14 +32,14 @@ public class EmpenhoServices {
         return empenhoRepository.save(empenho);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) throws CantDeleteEmpenho {
         Empenho empenho = findById(id);
 
         // Não deve ser permitido deletar um Empenho que tenha ao menos um Pagamento associado.
         if (empenho.getPagamentos().isEmpty()){
             empenhoRepository.deleteById(id);
         }else{
-            throw new RuntimeException("Impossivel deletar: existem Pagamentos associados ao empenho.");
+            throw new CantDeleteEmpenho("Impossivel deletar: existem Pagamentos associados ao empenho.");
         }
 
     }

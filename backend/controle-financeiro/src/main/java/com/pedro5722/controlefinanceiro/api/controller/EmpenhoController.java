@@ -2,6 +2,7 @@ package com.pedro5722.controlefinanceiro.api.controller;
 
 import com.pedro5722.controlefinanceiro.api.dto.EmpenhoDTO;
 import com.pedro5722.controlefinanceiro.domain.entidade.Empenho;
+import com.pedro5722.controlefinanceiro.domain.exceptions.CantDeleteEmpenho;
 import com.pedro5722.controlefinanceiro.domain.services.EmpenhoServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,11 @@ public class EmpenhoController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
-        empenhoServices.deleteById(id);
-        return new ResponseEntity<String>("Empenho excluido com sucesso", HttpStatus.OK);
+        try {
+            empenhoServices.deleteById(id);
+            return new ResponseEntity<String>("Empenho excluido com sucesso", HttpStatus.OK);
+        }catch (CantDeleteEmpenho e){
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 }

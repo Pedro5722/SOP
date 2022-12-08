@@ -1,5 +1,6 @@
 package com.pedro5722.controlefinanceiro.api.controller;
 
+import com.pedro5722.controlefinanceiro.api.dto.PagamentoDTO;
 import com.pedro5722.controlefinanceiro.domain.entidade.Pagamento;
 import com.pedro5722.controlefinanceiro.domain.services.PagamentoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class PagamentoController {
     }
 
     @PostMapping()
-    public ResponseEntity<Pagamento> salvar(@RequestBody Pagamento pagamento){
-        pagamento = pagamentoServices.save(pagamento);
+    public ResponseEntity<Pagamento> salvar(@RequestBody PagamentoDTO pagamentoDTO){
+        Pagamento pagamento = pagamentoServices.save(pagamentoDTO);
         return ResponseEntity.ok(pagamento);
     }
 }

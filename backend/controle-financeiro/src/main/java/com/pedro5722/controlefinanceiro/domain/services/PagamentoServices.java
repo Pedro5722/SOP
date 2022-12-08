@@ -1,6 +1,8 @@
 package com.pedro5722.controlefinanceiro.domain.services;
 
+import com.pedro5722.controlefinanceiro.api.dto.PagamentoDTO;
 import com.pedro5722.controlefinanceiro.domain.entidade.Pagamento;
+import com.pedro5722.controlefinanceiro.domain.repositories.EmpenhoRepository;
 import com.pedro5722.controlefinanceiro.domain.repositories.PagamentoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,19 @@ import java.util.List;
 @AllArgsConstructor
 public class PagamentoServices {
     private final PagamentoRepository pagamentoRepository;
+    private final EmpenhoRepository empenhoRepository;
 
-    public Pagamento save(Pagamento pagamento){
+    public Pagamento save(PagamentoDTO pagamentoDto){
+        Long idEmpenho = empenhoRepository.findByNumeroAndAno(pagamentoDto.getNumeroEmpenho(), pagamentoDto.getAnoEmpenho()).get().getId();
+        Pagamento pagamento = Pagamento.builder()
+                .ano(pagamentoDto.getAno())
+                .numero(pagamentoDto.getNumero())
+                .data(pagamentoDto.getData())
+                .valor(pagamentoDto.getValor())
+                .observacao(pagamentoDto.getObservacao())
+                .idEmpenho(idEmpenho)
+                .build();
+
         return pagamentoRepository.save(pagamento);
     }
 

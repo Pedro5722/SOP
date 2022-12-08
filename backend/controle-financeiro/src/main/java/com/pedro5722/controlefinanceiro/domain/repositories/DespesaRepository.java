@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface DespesaRepository extends JpaRepository<Despesa, Long> {
     Optional<Despesa> findByNumeroProtocolo(String numeroProtocolo);
-
-
 }
